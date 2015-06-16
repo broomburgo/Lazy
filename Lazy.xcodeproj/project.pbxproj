@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		38DD4F741B306A4F003BBCEE /* Lazy.h in Headers */ = {isa = PBXBuildFile; fileRef = 38DD4F731B306A4F003BBCEE /* Lazy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		38DD4F7A1B306A4F003BBCEE /* Lazy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38DD4F6E1B306A4F003BBCEE /* Lazy.framework */; };
 		38DD4F811B306A4F003BBCEE /* LazyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DD4F801B306A4F003BBCEE /* LazyTests.swift */; };
+		38DD4F8B1B306A5D003BBCEE /* Lazy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DD4F8A1B306A5D003BBCEE /* Lazy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,10 +25,10 @@
 /* Begin PBXFileReference section */
 		38DD4F6E1B306A4F003BBCEE /* Lazy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Lazy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		38DD4F721B306A4F003BBCEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		38DD4F731B306A4F003BBCEE /* Lazy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Lazy.h; sourceTree = "<group>"; };
 		38DD4F791B306A4F003BBCEE /* LazyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LazyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38DD4F7F1B306A4F003BBCEE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38DD4F801B306A4F003BBCEE /* LazyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LazyTests.swift; sourceTree = "<group>"; };
+		38DD4F8A1B306A5D003BBCEE /* Lazy.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lazy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -71,7 +71,7 @@
 		38DD4F701B306A4F003BBCEE /* Lazy */ = {
 			isa = PBXGroup;
 			children = (
-				38DD4F731B306A4F003BBCEE /* Lazy.h */,
+				38DD4F8A1B306A5D003BBCEE /* Lazy.swift */,
 				38DD4F711B306A4F003BBCEE /* Supporting Files */,
 			);
 			path = Lazy;
@@ -109,7 +109,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38DD4F741B306A4F003BBCEE /* Lazy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +208,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38DD4F8B1B306A5D003BBCEE /* Lazy.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -323,6 +323,7 @@
 		38DD4F851B306A4F003BBCEE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
@@ -332,12 +333,14 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		38DD4F861B306A4F003BBCEE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
