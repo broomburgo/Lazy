@@ -3,16 +3,16 @@
 import Foundation
 
 /// empty sequence
-public func empty <A> () -> SequenceOf<A> {
-    return SequenceOf(GeneratorOfOne(nil))
+public func empty <A> () -> AnySequence<A> {
+    return AnySequence(GeneratorOfOne(nil))
 }
 
 /// adds to sequences: during generation, after generating the first, it starts with the second
-public func + <T> (lhs: SequenceOf<T>, rhs: SequenceOf<T>) -> SequenceOf<T> {
-    return SequenceOf { _ -> GeneratorOf<T> in
-        var leftGenerator = lhs.generate()
-        var rightGenerator = rhs.generate()
-        return GeneratorOf {
+public func + <T> (lhs: AnySequence<T>, rhs: AnySequence<T>) -> AnySequence<T> {
+    return AnySequence { _ -> AnyGenerator<T> in
+        let leftGenerator = lhs.generate()
+        let rightGenerator = rhs.generate()
+        return anyGenerator {
             if let left = leftGenerator.next() {
                 return left
             }
@@ -27,7 +27,7 @@ public func + <T> (lhs: SequenceOf<T>, rhs: SequenceOf<T>) -> SequenceOf<T> {
 }
 
 /// find an element at a certain index, without generating the whole sequence
-public func elementAtIndex <T> (sequence: SequenceOf<T>, index: Int) -> T? {
+public func elementAtIndex <T> (sequence: AnySequence<T>, index: Int) -> T? {
     var count = 0
     for element in sequence {
         if count == index {
@@ -39,10 +39,10 @@ public func elementAtIndex <T> (sequence: SequenceOf<T>, index: Int) -> T? {
 }
 
 /// currently (Swift 1.2) 'map' on Sequence generates an Array
-public func mapLazy <T,U> (sequence: SequenceOf<T>, change: T -> U) -> SequenceOf<U> {
-    var generator = sequence.generate()
-    return SequenceOf {
-        return GeneratorOf {
+public func mapLazy <T,U> (sequence: AnySequence<T>, change: T -> U) -> AnySequence<U> {
+    let generator = sequence.generate()
+    return AnySequence {
+        return anyGenerator {
             if let nextElement = generator.next() {
                 return change(nextElement)
             }
@@ -54,23 +54,23 @@ public func mapLazy <T,U> (sequence: SequenceOf<T>, change: T -> U) -> SequenceO
 }
 
 /// this generates a new Sequence with equal of lower count than the original one
-public func filterLazy <T> (sequence: SequenceOf<T>, check: T -> Bool) -> SequenceOf<T> {
-    var generator = sequence.generate()
-    return SequenceOf {
-        return GeneratorOf {
-            return nextElementPassingCheck(generator, check)
+public func filterLazy <T> (sequence: AnySequence<T>, _ check: T -> Bool) -> AnySequence<T> {
+    let generator = sequence.generate()
+    return AnySequence {
+        return anyGenerator {
+            return nextElementPassingCheck(generator, check: check)
         }
     }
 }
 
 ///MARK: - internal
-func nextElementPassingCheck<T> (var generator: GeneratorOf<T>, check: T -> Bool) -> T? {
+func nextElementPassingCheck<T> (generator: AnyGenerator<T>, check: T -> Bool) -> T? {
     if let nextElement = generator.next() {
         if check(nextElement) {
             return nextElement
         }
         else {
-            return nextElementPassingCheck(generator, check)
+            return nextElementPassingCheck(generator, check: check)
         }
     }
     else {
