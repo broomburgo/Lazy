@@ -33,6 +33,14 @@ public func + <T> (lhs: AnySequence<T>, rhs: AnySequence<T>) -> AnySequence<T>
   return AnySequence { anyGenerator { leftGenerator.next() ?? rightGenerator.next() } }
 }
 
+/// reducer to generate a sequence by reducing a SequenceType
+public func anySequenceReducer<T> () -> (AnySequence<T>, T) -> AnySequence<T>
+{
+  return { accumulator, element in
+    return AnySequence(accumulator) + AnySequence { GeneratorOfOne (element) }
+  }
+}
+
 ///MARK: - internal
 func nextElementPassingCheck <G: GeneratorType, T where T == G.Element> (var generator: G, _ check: T -> Bool) -> T?
 {
