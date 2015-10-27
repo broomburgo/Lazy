@@ -25,14 +25,14 @@ public extension SequenceType
     return nil
   }
   
-  /// currently (Swift 2) 'map' on Sequence generates an Array
+  /// currently (Swift 2.1) 'map' on Sequence generates an Array
   public func mapLazy <T> (change: Generator.Element -> T) -> AnySequence<T>
   {
     var generator = generate()
     return AnySequence { anyGenerator { generator.next().map(change) } }
   }
   
-  /// this generates a new Sequence with equal of lower count than the original one
+  /// this generates a new Sequence with equal or lower count than the original one
   public func filterLazy (check: Generator.Element -> Bool) -> AnySequence<Generator.Element>
   {
     let generator = generate()

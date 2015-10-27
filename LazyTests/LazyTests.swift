@@ -1,15 +1,55 @@
 import UIKit
 import XCTest
 
-class LazyTests: XCTestCase {
+@testable import Lazy
+
+class LazyTests: XCTestCase
+{
+  var sequence = AnySequence<Int>.empty()
+  
+  override func setUp() {
+    super.setUp()
     
-    override func setUp() {
-        super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    var index = 0
+    let maxIndex = 10
+    sequence = AnySequence {
+      anyGenerator {
+        let currentIndex = index
+        index += 1
+        return currentIndex < maxIndex ? currentIndex : nil
+      }
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+  }
+  
+  func testEmptySequence()
+  {
+    let emptySequence = AnySequence<Int>.empty()
+    for _ in emptySequence
+    {
+      XCTAssertTrue(false)
     }
+  }
+  
+  func testElementAtIndex()
+  {
+    let elementAtIndex4 = sequence.elementAtIndex(4)
+    XCTAssertNotNil(elementAtIndex4)
+    XCTAssertEqual(elementAtIndex4, 4)
+  }
+  
+  func testMapLazy()
+  {
+    let sequenceOfHundreds = sequence.mapLazy { $0*100 }
+    let arrayOfHundreds = Array(sequenceOfHundreds)
+    let expectedArrayOfHundreds = [0,100,200,300,400,500,600,700,800,900]
+    XCTAssertEqual(arrayOfHundreds, expectedArrayOfHundreds)
+  }
+  
+  func testFilterLazy()
+  {
+    let sequenceOfEvens = sequence.filterLazy { $0%2 == 0 }
+    let arrayOfEvens = Array(sequenceOfEvens)
+    let expectedArrayOfEvens = [0,2,4,6,8]
+    XCTAssertEqual(arrayOfEvens, expectedArrayOfEvens)
+  }
 }
