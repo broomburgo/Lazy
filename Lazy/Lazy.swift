@@ -33,7 +33,7 @@ public func + <T> (lhs: AnySequence<T>, rhs: AnySequence<T>) -> AnySequence<T>
   return AnySequence { anyGenerator { leftGenerator.next() ?? rightGenerator.next() } }
 }
 
-/// reducer to generate a sequence by reducing a SequenceType
+/// reducer to generate an AnySequence
 public func anySequenceReducer<T> () -> (AnySequence<T>, T) -> AnySequence<T>
 {
   return { accumulator, element in
