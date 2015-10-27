@@ -30,13 +30,6 @@ class LazyTests: XCTestCase
     }
   }
   
-  func testElementAtIndex()
-  {
-    let elementAtIndex4 = sequence.elementAtIndex(4)
-    XCTAssertNotNil(elementAtIndex4)
-    XCTAssertEqual(elementAtIndex4, 4)
-  }
-  
   func testMapLazy()
   {
     let sequenceOfHundreds = sequence.mapLazy { $0*100 }

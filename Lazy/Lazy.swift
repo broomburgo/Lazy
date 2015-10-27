@@ -9,22 +9,7 @@ public extension SequenceType
   {
     return AnySequence { anyGenerator { nil } }
   }
-  
-  /// find an element at a certain index, without generating the whole sequence
-  public func elementAtIndex (index: Int) -> Generator.Element?
-  {
-    var count = 0
-    for element in self
-    {
-      if count == index
-      {
-        return element
-      }
-      count += 1
-    }
-    return nil
-  }
-  
+    
   /// currently (Swift 2.1) 'map' on Sequence generates an Array
   public func mapLazy <T> (change: Generator.Element -> T) -> AnySequence<T>
   {
